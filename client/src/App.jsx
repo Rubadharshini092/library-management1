@@ -1,9 +1,10 @@
 
 import { useEffect, useMemo, useState } from "react";
 
+// Render backend API configuration
 const API_BASE = (
   import.meta.env.VITE_API_URL ||
-  "http://localhost:5000/api"
+  "https://library-management1-y2is.onrender.com/api"
 ).replace(/\/+$/, "");
 
 const API = `${API_BASE}/books`;
@@ -15,6 +16,7 @@ const emptyForm = {
   category: "General",
 };
 
+// Common API request function
 async function apiRequest(url, options = {}) {
   const response = await fetch(url, {
     ...options,
@@ -27,6 +29,7 @@ async function apiRequest(url, options = {}) {
   const text = await response.text();
 
   let data = {};
+
   try {
     data = text ? JSON.parse(text) : {};
   } catch {
@@ -60,6 +63,7 @@ export default function App() {
 
     try {
       const data = await apiRequest(API);
+
       setBooks(Array.isArray(data) ? data : []);
     } catch (err) {
       console.error("API URL:", API);
@@ -259,6 +263,7 @@ export default function App() {
       {error && (
         <div className="notice error">
           {error}
+
           <button
             className="button secondary"
             type="button"
@@ -395,6 +400,7 @@ export default function App() {
           <div className="empty">
             <span>📖</span>
             <h3>No books found</h3>
+
             <p>
               Add a book above or try a different search.
             </p>
